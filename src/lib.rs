@@ -1,11 +1,10 @@
 
-pub mod handoff_counter;
+mod handoff_counter;
 
+pub use handoff_counter::*;
 
 #[cfg(test)]
 mod tests {
-
-    use handoff_counter::Counter;
 
     type Cnt = Counter<&'static str>;
 

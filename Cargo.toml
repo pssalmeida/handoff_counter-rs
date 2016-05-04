@@ -1,6 +1,7 @@
 [package]
 name = "handoff_counter"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Paulo Sérgio Almeida <pssalmeida@gmail.com>"]
 
 [dependencies]
+rand = "0.3.14"
