@@ -46,6 +46,10 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
         self.val
     }
 
+    pub fn slots(&self) -> &HashMap<Id, (u64, u64)> {
+        &self.slots
+    }
+
     pub fn incr(&mut self) {
         self.val += 1;
         let mut v = self.vals.get_mut(&self.id).unwrap();
