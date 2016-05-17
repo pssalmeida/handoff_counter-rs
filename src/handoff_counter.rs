@@ -5,7 +5,7 @@ use std::cmp::max;
 #[derive(Clone, Debug)]
 pub struct Counter<Id: Hash + Eq + Copy> {
     id: Id,
-    tier: u32,
+    tier: usize,
     val: u64,
     below: u64,
     vals: HashMap<Id, u64>,
@@ -17,7 +17,7 @@ pub struct Counter<Id: Hash + Eq + Copy> {
 
 impl<Id: Hash + Eq + Copy> Counter<Id> {
 
-    pub fn new(id: Id, tier: u32) -> Counter<Id> {
+    pub fn new(id: Id, tier: usize) -> Counter<Id> {
         let mut c = Counter {
             id: id,
             tier: tier,
@@ -36,6 +36,10 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
 
     pub fn id(&self) -> Id {
         self.id
+    }
+
+    pub fn tier(&self) -> usize {
+        self.tier
     }
 
     pub fn value(&self) -> u64 {
