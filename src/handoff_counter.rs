@@ -56,6 +56,29 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
         *v += 1;
     }
 
+    pub fn view(&self, id: Id, tier: usize) -> Self {
+        let mut slots: HashMap<Id, (u64, u64)> = HashMap::with_capacity(1);
+        if self.tier < tier {
+            match self.slots.get(&id) {
+                Some(&v) => { slots.insert(id, v); }
+                None => {}
+            }
+        } else if self.tier == tier {
+            slots = self.slots.clone();
+        }
+        Counter {
+            id : self.id,
+            tier: self.tier,
+            val: self.val,
+            below: self.below,
+            vals: self.vals.clone(),
+            sck: self.sck,
+            dck: self.dck,
+            slots: slots,
+            tokens: self.tokens.clone(),
+        }
+    }
+
     pub fn merge(&mut self, other: &Self) {
         self.fill_slots(other);
         self.discard_slot(other);
