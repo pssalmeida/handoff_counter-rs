@@ -13,7 +13,7 @@ fn vars(prefix: &str, n: usize) -> Vec<String> {
 type Cnt<'a> = Counter<&'a str>;
 type Env<'a> = HashMap<&'a str, Cnt<'a>>;
 
-fn rand_trace(n: usize, c: usize, s: usize, r: usize) {
+pub fn rand_trace(n: usize, c: usize, s: usize, r: usize) -> usize {
     let clients = vars("c", c);
     let servers = vars("s", s);
     let roots = vars("r", r);
@@ -52,12 +52,11 @@ fn rand_trace(n: usize, c: usize, s: usize, r: usize) {
         }
     }
 
-    println!("incrs: {}", incrs);
     let mut wrong = 0;
     for c in env.values() {
         if c.value() != incrs { wrong += 1; }
     }
-    println!("wrong values: {}", wrong);
+    wrong
 }
 
 fn main() {
@@ -66,6 +65,18 @@ fn main() {
     let c: usize = args[2].parse().unwrap();
     let s: usize = args[3].parse().unwrap();
     let r: usize = args[4].parse().unwrap();
-    rand_trace(n, c, s, r);
+    let wrong = rand_trace(n, c, s, r);
+    println!("wrong values: {}", wrong);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn random_trace_test() {
+        assert!(rand_trace(100000, 30, 20, 20) == 0);
+    }
+}
+
 

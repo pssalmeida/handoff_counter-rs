@@ -50,6 +50,10 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
         &self.slots
     }
 
+    pub fn needs_to_handoff(&self) -> bool {
+        self.vals[&self.id] > 0 || !self.tokens.is_empty()
+    }
+
     pub fn incr(&mut self) {
         self.val += 1;
         let mut v = self.vals.get_mut(&self.id).unwrap();
@@ -114,7 +118,7 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
 
     fn create_slot(&mut self, other: &Self) {
         if self.tier < other.tier &&
-           *other.vals.get(&other.id).unwrap() > 0 &&
+           other.vals[&other.id] > 0 &&
            !self.slots.contains_key(&other.id) {
                self.slots.insert(other.id, (other.sck, self.dck));
                self.dck += 1;
@@ -142,10 +146,9 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
             self.vals.values().fold(0, |s,&v| s+v)
         } else if self.tier == other.tier {
             max(max(self.val, other.val), b +
-                self.vals.get(&self.id).unwrap() +
-                other.vals.get(&other.id).unwrap())
+                self.vals[&self.id] + other.vals[&other.id])
         } else {
-            max(self.val, b + self.vals.get(&self.id).unwrap())
+            max(self.val, b + self.vals[&self.id])
         };
         self.below = b;
         self.val = v;
