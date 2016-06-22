@@ -34,21 +34,17 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
         c
     }
 
-    pub fn id(&self) -> Id {
-        self.id
-    }
+    pub fn id(&self) -> Id { self.id }
 
-    pub fn tier(&self) -> usize {
-        self.tier
-    }
+    pub fn tier(&self) -> usize { self.tier }
 
-    pub fn value(&self) -> u64 {
-        self.val
-    }
+    pub fn value(&self) -> u64 { self.val }
 
-    pub fn slots(&self) -> &HashMap<Id, (u64, u64)> {
-        &self.slots
-    }
+    pub fn vals(&self) -> &HashMap<Id, u64> { &self.vals }
+
+    pub fn slots(&self) -> &HashMap<Id, (u64, u64)> { &self.slots }
+
+    pub fn tokens(&self) -> &HashMap<(Id, Id), (u64, u64, u64)> { &self.tokens }
 
     pub fn needs_to_handoff(&self) -> bool {
         self.vals[&self.id] > 0 || !self.tokens.is_empty()
@@ -81,6 +77,12 @@ impl<Id: Hash + Eq + Copy> Counter<Id> {
             slots: slots,
             tokens: self.tokens.clone(),
         }
+    }
+
+    pub fn cleaning_view(&self) -> Self {
+        let mut c = self.clone();
+        c.vals.insert(self.id, 0);
+        c
     }
 
     pub fn merge(&mut self, other: &Self) {
