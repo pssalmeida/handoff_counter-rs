@@ -1,6 +1,6 @@
 [package]
 name = "handoff_counter"
-version = "0.8.4"
+version = "0.8.5"
 authors = ["Paulo Sérgio Almeida <pssalmeida@gmail.com>"]
 description = "Handoff Counters"
 repository = "https://github.com/pssalmeida/handoff_counter-rs"
