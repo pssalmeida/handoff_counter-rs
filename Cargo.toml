@@ -1,11 +1,11 @@
 [package]
 name = "handoff_counter"
-version = "0.8.1"
+version = "0.8.2"
 authors = ["Paulo Sérgio Almeida <pssalmeida@gmail.com>"]
 description = "Handoff Counters"
 repository = "https://github.com/pssalmeida/handoff_counter-rs"
 readme = "README.md"
-keywords = ["scalable eventually consistent distributed counters", "CRDT"]
+keywords = ["scalable-eventually-consistent-distributed-counters", "CRDT"]
 license = "MIT"
 
 [dependencies]
