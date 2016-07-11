@@ -1,8 +1,7 @@
-# crdt
+# Handoff Counters in Rust
 
-Handoff Counters in Rust - eventually consistent distributed counters, as presented in
+Eventually consistent distributed counters, as presented in
 http://arxiv.org/abs/1307.3207
-
 
 ## Usage
 
